@@ -1,9 +1,30 @@
 const express = require('express')
 const app = express()
 
+app.use(express.static('public'))
+
+app.set('view engine', 'ejs')
+
+
+
+// Routers
 app.get('/', (req, res) => {
-  res.send('Olá Fullstack Lab')
+  res.render('home')
 })
+
+app.get('/vaga', (req, res) => {
+  res.render('vaga')
+})
+
+app.get('/aboutme', (req, res) => {
+  res.render('aboutme')
+})
+
+// Vagas
+
+// Categorias
+
+// Database
 
 
 app.listen(8080, (err) => {
