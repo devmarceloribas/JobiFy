@@ -1,0 +1,10 @@
+<%- include('header') %>
+  <h2> Admin Vagas:</h2>
+    <div>
+        <ul>
+          <% vagas.forEach(vagas => { %>
+          <li> <a href="admin/vagas/vagas/<%- vagas.id %>"> <%- vagas.titulo %> </a> </li>
+          <% }) %>
+        </ul>
+    </div>
+<%- include('footer') %>

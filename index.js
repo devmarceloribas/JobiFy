@@ -31,7 +31,7 @@ app.get('/', async(req, res) => {
 
 app.get('/vaga/:id', async(req, res) => {
   const db = await dbConn
-  const vagas = await db.get('select * from vagas where ' + req.params.id + ';')
+  const vagas = await db.get('select * from vagas where categoria = ' + req.params.id + ';')
   res.render('vaga', {
     vagas
   })
@@ -39,6 +39,10 @@ app.get('/vaga/:id', async(req, res) => {
 
 app.get('/aboutme', (req, res) => {
   res.render('aboutme')
+})
+
+app.get('/admin', (req, res) => {
+  res.render('admin/home')
 })
 
 // Database
@@ -73,7 +77,24 @@ init()
 
 // Oportunitys
 
+app.get('/admin/vagas', async(req, res) => {
+  const db = await dbConn
+  const vagas = await db.all('select * from vagas;')
+  res.render('admin/vagas', {
+    vagas
+  })
+})
+
 // Category
+
+app.get('/admin/categorias', async(req, res) => {
+  const db = await dbConn
+  const categorias = await db.all('select * from categorias;')
+  res.render('admin/categorias', {
+    categorias
+  })
+})
+
 
 
 app.listen(8080, (err) => {
