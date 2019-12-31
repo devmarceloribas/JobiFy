@@ -14,14 +14,27 @@ app.set('view engine', 'ejs')
 // Routers
 app.get('/', async(req, res) => {
   const db = await dbConn
-  const categorias = await db.all('select * from categorias')
+  const categoriasDb = await db.all('select * from categorias;')
+  const vagas = await db.all('select * from vagas;')
+
+  const categorias = categoriasDb.map(cat =>{
+    return {
+      ...cat,
+      vagas: vagas.filter(vagas => vagas.categoria === cat.id)
+    }
+  })
   res.render('home', {
-    categorias
+    categorias,
+    vagas
   })
 })
 
-app.get('/vaga', (req, res) => {
-  res.render('vaga')
+app.get('/vaga/:id', async(req, res) => {
+  const db = await dbConn
+  const vagas = await db.get('select * from vagas where ' + req.params.id + ';')
+  res.render('vaga', {
+    vagas
+  })
 })
 
 app.get('/aboutme', (req, res) => {
@@ -31,12 +44,29 @@ app.get('/aboutme', (req, res) => {
 // Database
 const init = async() => {
   const db = await dbConn
+
+  // Create tables (categorias and vagas)
   await db.run('create table if not exists categorias (id integer primary key, categoria text)')
+  await db.run('create table if not exists vagas (id integer primary key, categoria integer, titulo text, descricao text)')
+
+  // Add record at the table
   //const categoria = 'Engeneering Team'
   //await db.run(`insert into categorias (categoria) values ('${categoria}');`)
   
   //const categoria2 = 'Marketing Team'
   //await db.run(`insert into categorias (categoria) values ('${categoria2}');`)
+
+  
+  //const categoria = 1
+  //const titulo = 'Fullstack Developer (Remote)'
+  //const descricao = 'Vaga para quem realizou o treinamento FullStack Developer'
+  //await db.run(`insert into vagas(categoria, titulo, descricao) values (${categoria}, '${titulo}', '${descricao}')`)
+
+  //const categoria = 2
+  //const titulo = 'Social Midia (São Paulo)'
+  //const descricao = 'Responsavel por todas as midias socias'
+  //await db.run(`insert into vagas(categoria, titulo, descricao) values (${categoria}, '${titulo}', '${descricao}')`)
+  
 }
 
 init()
