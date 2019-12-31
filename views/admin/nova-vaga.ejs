@@ -1,0 +1,25 @@
+<%- include('header') %>
+  <h2> 
+    Nova Vaga:
+    <a href="/admin/vagas"> Vagas </a>
+  </h2>
+    <div>
+      <fieldset> <legend> Dados Vaga </legend>
+        <form method="POST">
+          <label> Título: </label>
+          <input type="text" name="titulo">
+          <br>
+          <label> Descrição: </label>
+          <textarea name="descricao"></textarea>
+          <br>
+          <label> Categoria: </label>
+          <select name="categoria">
+            <option value="1"> Engeneering Team </option>
+            <option value="2"> Marketing Team </option>
+          </select>
+          <br>
+          <button> Salvar Vaga </button>
+        </form>
+      </fieldset>
+    </div>
+<%- include('footer') %>

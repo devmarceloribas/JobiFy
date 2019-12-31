@@ -2,12 +2,16 @@
 const express = require('express')
 const app = express()
 
+// Body Parser
+const bodyParser = require('body-parser')
+
 // SQL Lite
 const sqlite = require('sqlite')
 const dbConn = sqlite.open('jobiFy.sqlite', {Promise})
 
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.set('view engine', 'ejs')
 
@@ -52,25 +56,6 @@ const init = async() => {
   // Create tables (categorias and vagas)
   await db.run('create table if not exists categorias (id integer primary key, categoria text)')
   await db.run('create table if not exists vagas (id integer primary key, categoria integer, titulo text, descricao text)')
-
-  // Add record at the table
-  //const categoria = 'Engeneering Team'
-  //await db.run(`insert into categorias (categoria) values ('${categoria}');`)
-  
-  //const categoria2 = 'Marketing Team'
-  //await db.run(`insert into categorias (categoria) values ('${categoria2}');`)
-
-  
-  //const categoria = 1
-  //const titulo = 'Fullstack Developer (Remote)'
-  //const descricao = 'Vaga para quem realizou o treinamento FullStack Developer'
-  //await db.run(`insert into vagas(categoria, titulo, descricao) values (${categoria}, '${titulo}', '${descricao}')`)
-
-  //const categoria = 2
-  //const titulo = 'Social Midia (São Paulo)'
-  //const descricao = 'Responsavel por todas as midias socias'
-  //await db.run(`insert into vagas(categoria, titulo, descricao) values (${categoria}, '${titulo}', '${descricao}')`)
-  
 }
 
 init()
@@ -91,6 +76,18 @@ app.get('/admin/vagas/delete/:id', async(req, res) => {
   res.redirect('/admin/vagas')
 })
 
+app.get('/admin/vagas/nova', async(req, res) => {
+  const db = await dbConn
+  res.render('admin/nova-vaga')
+})
+
+app.post('/admin/vagas/nova', async(req, res) => {
+  const db = await dbConn
+  const { categoria, titulo, descricao} = req.body
+  await db.run(`insert into vagas(categoria, titulo, descricao) values (${categoria}, '${titulo}', '${descricao}')`)
+  res.redirect('/admin/vagas')
+})
+
 // Category
 
 app.get('/admin/categorias', async(req, res) => {
@@ -106,6 +103,19 @@ app.get('/admin/categorias/delete/:id', async(req, res) => {
   await db.run('delete from categorias where id = ' + req.params.id + ';')
   res.redirect('/admin/categorias')
 })
+
+app.get('/admin/categorias/nova', async(req, res) => {
+  const db = await dbConn
+  res.render('admin/nova-categoria')
+})
+
+app.post('/admin/categorias/nova', async(req, res) => {
+  const db = await dbConn
+  const { categoria } = req.body
+  await db.run(`insert into categorias(categoria) values ('${categoria}')`)
+  res.redirect('/admin/categorias')
+})
+
 
 // Listener
 app.listen(8080, (err) => {
