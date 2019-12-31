@@ -137,7 +137,6 @@ app.post('/admin/categorias/nova', async(req, res) => {
   res.redirect('/admin/categorias')
 })
 
-
 // Listener
 app.listen(8080, (err) => {
   if (err) {
