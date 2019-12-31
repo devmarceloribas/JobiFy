@@ -1,12 +1,16 @@
 {
   "name": "jobify",
   "version": "1.0.0",
-  "description": "Sistema para Cadastro de vagas (FullStack Lab)",
+  "description": "Jobify is a simple job board for sites.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node index.js"
   },
-  "author": "Marcelo Ribas",
+  "keywords": [
+    "jobify",
+    "job"
+  ],
+  "author": "Breno Nesto",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",

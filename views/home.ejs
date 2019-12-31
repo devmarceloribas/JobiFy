@@ -1,14 +1,19 @@
-    <%- include('header') %>
-    <h2> Open Roles:</h2>
-    <% categorias.forEach(categorias => { %> 
+<%- include('header') %>
+    
+        
+    
+    <h2>Open roles:</h2>
+    <% categorias.forEach( categoria => { %>
     <div>
-      <h3><%- categorias.categoria %></h3>
+    <h3><%- categoria.categoria %></h3>
         <ul>
-          <% categorias.vagas.forEach(vagas => { %> 
-          <li> <a href="vaga/<%- vagas.id %>"> <%- vagas.titulo %> </a> </li>
-          <% }) %>
+            <% categoria.vagas.forEach( vaga => { %>
+
+            <li><a href="vaga/<%- vaga.id %>"><%- vaga.titulo %></a></li>
+            <% }) %>
         </ul>
     </div>
     <% }) %>
-    <p> System Developement by <a href="aboutme"> Marcelo Ribas (DevPleno) </a> </p>
-    <%- include('footer') %>
+    <p> Sistema desenvolvido por - Marcelo Ribas ( by DevPleno )</p>
+    <p> <a href="aboutme"> Clique aqui para acessar o CV do desenvolvedor </a> </p>
+<%- include('footer') %>

@@ -1,14 +1,13 @@
 <%- include('header') %>
 
 <h2>
-  Nova Categoria:
-  <a href="/admin/categorias"> Categorias </a>
+  Editar categoria:
+  <a href="/admin/categorias">Categorias</a>
 </h2>
 <div>
     <form action="" method="POST">
         <label for="">Categoria:</label>
-        <input type="text" name="categoria">
-        <br>
+        <input type="text" name="categoria" value="<%= categorias.categoria %>">
         <br>
         <button>Salvar categoria</button>
     </form>
