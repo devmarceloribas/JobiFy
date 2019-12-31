@@ -78,13 +78,34 @@ app.get('/admin/vagas/delete/:id', async(req, res) => {
 
 app.get('/admin/vagas/nova', async(req, res) => {
   const db = await dbConn
-  res.render('admin/nova-vaga')
+  const categorias = await db.all('select * from categorias')
+  res.render('admin/nova-vaga', {
+    categorias
+  })
 })
 
 app.post('/admin/vagas/nova', async(req, res) => {
   const db = await dbConn
   const { categoria, titulo, descricao} = req.body
   await db.run(`insert into vagas(categoria, titulo, descricao) values (${categoria}, '${titulo}', '${descricao}')`)
+  res.redirect('/admin/vagas')
+})
+
+app.get('/admin/vagas/editar/:id', async(req, res) => {
+  const db = await dbConn
+  const categorias = await db.all('select * from categorias')
+  const vagas = await db.get('select * from vagas where id = ' + req.params.id + ';')
+  res.render('admin/editar-vaga', {
+    categorias,
+    vagas
+  })
+})
+
+app.post('/admin/vagas/editar/:id', async(req, res) => {
+  const db = await dbConn
+  const { id } = req.params
+  const { categoria, titulo, descricao} = req.body
+  await db.run(`update vagas set categoria = ${categoria}, titulo = '${titulo}', descricao = '${descricao}' where id = ${id};`)
   res.redirect('/admin/vagas')
 })
 
