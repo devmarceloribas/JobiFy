@@ -85,6 +85,12 @@ app.get('/admin/vagas', async(req, res) => {
   })
 })
 
+app.get('/admin/vagas/delete/:id', async(req, res) => {
+  const db = await dbConn
+  await db.run('delete from vagas where id = ' + req.params.id + ';')
+  res.redirect('/admin/vagas')
+})
+
 // Category
 
 app.get('/admin/categorias', async(req, res) => {
@@ -95,8 +101,13 @@ app.get('/admin/categorias', async(req, res) => {
   })
 })
 
+app.get('/admin/categorias/delete/:id', async(req, res) => {
+  const db = await dbConn
+  await db.run('delete from categorias where id = ' + req.params.id + ';')
+  res.redirect('/admin/categorias')
+})
 
-
+// Listener
 app.listen(8080, (err) => {
   if (err) {
     console.log('JobiFy server is not running', err)

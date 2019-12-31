@@ -3,8 +3,11 @@
     <div>
         <ul>
           <% vagas.forEach(vagas => { %>
-          <li> <a href="admin/vagas/vagas/<%- vagas.id %>"> <%- vagas.titulo %> </a> </li>
-          <% }) %>
+          <li> 
+             <%- vagas.titulo %> | 
+             <a href="/admin/vagas/delete/<%- vagas.id %>"> Excluir </a> 
+          </li>
+             <% }) %>
         </ul>
     </div>
 <%- include('footer') %>
