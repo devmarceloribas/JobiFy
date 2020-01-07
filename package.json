@@ -10,7 +10,7 @@
     "jobify",
     "job"
   ],
-  "author": "Breno Nesto",
+  "author": "Marcelo Ribas (by DevPleno)",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
