@@ -10,6 +10,7 @@
     "jobify",
     "job"
   ],
+  "engines": { "node": "12.x" },
   "author": "Marcelo Ribas (by DevPleno)",
   "license": "MIT",
   "dependencies": {
